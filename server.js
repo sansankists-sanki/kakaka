@@ -1,5 +1,5 @@
 const express = require('express');
-const Database = require('better-sqlite3');
+const { Pool } = require('pg');
 const path = require('path');
 
 const app = express();
@@ -10,26 +10,33 @@ const ADMIN_SECRET = 'v9x3k7p2';
 // 删除留言：GET http://localhost:3000/admin/v9x3k7p2/delete/:id
 // ──────────────────────────────────────────────────────────────────────
 
-// 初始化数据库
-const db = new Database(path.join(__dirname, 'messages.db'));
-db.exec(`
-  CREATE TABLE IF NOT EXISTS messages (
-    id         INTEGER PRIMARY KEY AUTOINCREMENT,
-    nickname   TEXT NOT NULL,
-    content    TEXT NOT NULL,
-    created_at DATETIME DEFAULT (datetime('now', 'localtime'))
-  )
-`);
+// PostgreSQL 连接池
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
+
+// 初始化数据库表
+async function initDB() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS messages (
+      id         SERIAL PRIMARY KEY,
+      nickname   TEXT NOT NULL,
+      content    TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW()
+    )
+  `);
+}
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── API：获取所有留言（倒序） ────────────────────────────────────────
-app.get('/api/messages', (req, res) => {
+app.get('/api/messages', async (req, res) => {
   try {
-    const rows = db.prepare(
-      'SELECT id, nickname, content, created_at FROM messages ORDER BY id DESC'
-    ).all();
+    const { rows } = await pool.query(
+      "SELECT id, nickname, content, to_char(created_at, 'YYYY-MM-DD HH24:MI:SS') AS created_at FROM messages ORDER BY id DESC"
+    );
     res.json({ ok: true, data: rows });
   } catch (err) {
     console.error(err);
@@ -38,7 +45,7 @@ app.get('/api/messages', (req, res) => {
 });
 
 // ─── API：提交留言 ────────────────────────────────────────────────────
-app.post('/api/messages', (req, res) => {
+app.post('/api/messages', async (req, res) => {
   const { nickname, content } = req.body || {};
 
   if (!nickname?.trim()) {
@@ -55,12 +62,11 @@ app.post('/api/messages', (req, res) => {
   }
 
   try {
-    const stmt = db.prepare(
-      'INSERT INTO messages (nickname, content) VALUES (?, ?)'
+    const { rows } = await pool.query(
+      "INSERT INTO messages (nickname, content) VALUES ($1, $2) RETURNING id, nickname, content, to_char(created_at, 'YYYY-MM-DD HH24:MI:SS') AS created_at",
+      [nickname.trim(), content.trim()]
     );
-    const result = stmt.run(nickname.trim(), content.trim());
-    const row = db.prepare('SELECT * FROM messages WHERE id = ?').get(result.lastInsertRowid);
-    res.status(201).json({ ok: true, data: row });
+    res.status(201).json({ ok: true, data: rows[0] });
   } catch (err) {
     console.error(err);
     res.status(500).json({ ok: false, error: '服务器错误' });
@@ -68,18 +74,21 @@ app.post('/api/messages', (req, res) => {
 });
 
 // ─── 管理员：访问此 URL 直接删除留言 ──────────────────────────────────
-app.get(`/admin/${ADMIN_SECRET}/delete/:id`, (req, res) => {
+app.get(`/admin/${ADMIN_SECRET}/delete/:id`, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
     return res.status(400).send('❌ 无效的 ID');
   }
 
   try {
-    const row = db.prepare('SELECT id, nickname, content FROM messages WHERE id = ?').get(id);
-    if (!row) {
+    const { rows } = await pool.query(
+      'SELECT id, nickname, content FROM messages WHERE id = $1', [id]
+    );
+    if (!rows.length) {
       return res.status(404).send('❌ 留言不存在（可能已删除）');
     }
-    db.prepare('DELETE FROM messages WHERE id = ?').run(id);
+    await pool.query('DELETE FROM messages WHERE id = $1', [id]);
+    const row = rows[0];
     res.send(`
       <html><head><meta charset="utf-8">
       <style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f9f9f7}
@@ -108,10 +117,17 @@ function escapeHtml(str) {
 }
 
 // ─── 启动 ─────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log('');
-  console.log('  ✦ 留言板已启动');
-  console.log(`  ✦ 访问地址：http://localhost:${PORT}`);
-  console.log(`  ✦ 删除留言：http://localhost:${PORT}/admin/${ADMIN_SECRET}/delete/<留言ID>`);
-  console.log('');
-});
+initDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log('');
+      console.log('  ✦ 留言板已启动');
+      console.log(`  ✦ 访问地址：http://localhost:${PORT}`);
+      console.log(`  ✦ 删除留言：http://localhost:${PORT}/admin/${ADMIN_SECRET}/delete/<留言ID>`);
+      console.log('');
+    });
+  })
+  .catch(err => {
+    console.error('数据库初始化失败:', err);
+    process.exit(1);
+  });
