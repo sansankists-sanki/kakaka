@@ -1,586 +1,255 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>好久不见</title>
-  <style>
-    /* ── 重置 & 基础 ─────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<title>��ء�؜�u�������� a simply web for simply life</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<style type="text/css">
+<!--
+body {
+	background-image:  url();
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+A1: {
+	FONT-SIZE: 8px; CURSOR: hand; COLOR: #ff1b5e; TEXT-DECORATION: none
+}
+A1:link {
+	FONT-SIZE: 8px; COLOR: #ff1b5e; TEXT-DECORATION: none
+}
+A1:visited {
+	FONT-SIZE: 8px; COLOR: #ff1b5e
+}
+A1:active {
+	FONT-SIZE: 8px;COLOR: #ff1b5e; BACKGROUND-COLOR: #fff
+}
+A1:hover {
+	FONT-SIZE: 8px; COLOR: #fff; BACKGROUND-COLOR: #ff1b5e
+}
+.t1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #999999;
+	text-decoration: none;
+	line-height: 15px;
+}
+.t2 {	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #CC0000;
+	text-decoration: none;
+}
+.T3 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #FFFFFF;
+	font-variant: normal;
+	text-transform: none;
+	font-style: normal;
+	line-height: normal;
+}
+a:link {
+	color: #000000;
+}
+a:visited {
+	color: #333333;
+}
+a:hover {
+	color: #000000;
+}
+a:active {
+	color: #000000;
+}
+.utt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 6px;
+	color: #FFFFFF;
+}
+.style1 {font-size: 36px; color: #FFFFFF; font-variant: normal; text-transform: none; font-style: normal; line-height: normal; font-family: Geneva, Arial, Helvetica, sans-serif;}
+.style3 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #CC3300; text-decoration: none; font-weight: bold; }
+-->
+</style>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
 
-    :root {
-      --c1: #7c5cbf; /* vivid violet   */
-      --c2: #2aa87a; /* vivid sage     */
-      --c3: #e05580; /* vivid rose     */
-      --c4: #2a7fd4; /* vivid blue     */
-      --c5: #d4820a; /* vivid amber    */
-      --radius: 14px;
-      --shadow: 0 2px 24px rgba(0,0,0,.055);
-    }
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
 
-    html { scroll-behavior: smooth; }
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC',
-                   'Hiragino Sans GB', 'Noto Sans SC', sans-serif;
-      background: #1a3a2a;
-      color: #e8e8e8;
-      min-height: 100vh;
-    }
-
-
-
-    /* ── Hero（占视口 1/3，最少 260px）────────────────────── */
-    .hero {
-      min-height: 33.33vh;
-      min-height: 33.33dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 2rem 3rem;
-      background: transparent;
-      position: relative;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 5.5vw, 3.6rem);
-      font-weight: 800;
-      letter-spacing: .06em;
-      line-height: 1.45;
-      text-align: center;
-      /* 从左到右流动的彩色渐变 */
-      background: linear-gradient(90deg,
-        #9b5de5, #4361ee, #4cc9f0, #06d6a0, #ffbe0b, #f72585, #9b5de5
-      );
-      background-size: 280% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: waveFlow 6s linear infinite;
-    }
-
-    @keyframes waveFlow {
-      0%   { background-position: 0% center; }
-      100% { background-position: 280% center; }
-    }
-
-    .hero-sub {
-      margin-top: 1.1rem;
-      font-size: .85rem;
-      letter-spacing: .14em;
-      color: #fff;
-      font-weight: 500;
-    }
-
-    /* ── 主内容区 ──────────────────────────────────────────── */
-    .main {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 6rem;
-    }
-
-    /* ── 留言列表 ──────────────────────────────────────────── */
-    .section-label {
-      font-size: .7rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: #fff;
-      margin-bottom: 1.4rem;
-    }
-
-    #messages-list {
-      display: flex;
-      flex-direction: column;
-      gap: .9rem;
-      margin-bottom: 4rem;
-    }
-
-    .msg-card {
-      background: rgba(255,255,255,.05);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius);
-      padding: 1.2rem 1.4rem;
-      box-shadow: var(--shadow);
-      animation: fadeSlideIn .35s ease both;
-    }
-
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .msg-header {
-      display: flex;
-      align-items: baseline;
-      gap: .7rem;
-      margin-bottom: .55rem;
-    }
-
-    .msg-nickname {
-      font-size: .88rem;
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .msg-time {
-      font-size: .72rem;
-      color: #fff;
-      letter-spacing: .03em;
-    }
-
-    .msg-id {
-      margin-left: auto;
-      font-size: .68rem;
-      color: #fff;
-      letter-spacing: .05em;
-    }
-
-    .msg-content {
-      font-size: .92rem;
-      line-height: 1.75;
-      color: #fff;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .empty-tip {
-      text-align: center;
-      color: #fff;
-      font-size: .88rem;
-      padding: 3rem 0;
-      letter-spacing: .08em;
-    }
-
-    /* ── 表单 ──────────────────────────────────────────────── */
-    .form-card {
-      background: rgba(255,255,255,.04);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: var(--radius);
-      padding: 2rem 1.8rem;
-      box-shadow: var(--shadow);
-    }
-
-    .form-title {
-      font-size: .82rem;
-      letter-spacing: .18em;
-      color: #fff;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: .4rem;
-      margin-bottom: 1.1rem;
-    }
-
-    label {
-      font-size: .75rem;
-      color: #fff;
-      letter-spacing: .1em;
-    }
-
-    input[type="text"],
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 8px;
-      padding: .7rem .9rem;
-      font-size: .9rem;
-      font-family: inherit;
-      color: #e0e0e0;
-      background: rgba(255,255,255,.05);
-      outline: none;
-      resize: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: rgba(150,130,220,.5);
-      box-shadow: 0 0 0 3px rgba(130,100,200,.1);
-    }
-
-    textarea { min-height: 110px; line-height: 1.65; }
-
-    .char-count {
-      text-align: right;
-      font-size: .68rem;
-      color: #fff;
-      margin-top: .25rem;
-    }
-
-    .char-count.warn { color: #d0916a; }
-
-    .btn-submit {
-      display: block;
-      margin: 1.2rem auto 0;
-      padding: .65rem 2.6rem;
-      border: none;
-      border-radius: 50px;
-      background: linear-gradient(135deg, #2a7a4f 0%, #4ac97e 100%);
-      color: #fff;
-      font-family: inherit;
-      font-size: .88rem;
-      letter-spacing: .16em;
-      cursor: pointer;
-      transition: transform .15s, box-shadow .2s;
-      box-shadow: 0 3px 14px rgba(42,180,100,.35);
-    }
-
-    .btn-submit:hover  { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42,180,100,.5); }
-    .btn-submit:active { transform: scale(.94); }
-    .btn-submit:disabled { background: #888; cursor: default; box-shadow: none; transform: none; }
-
-    @keyframes starBurst {
-      0%   { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-      100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }
-    }
-
-    /* ── Toast 提示 ────────────────────────────────────────── */
-    #toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      background: #2a2a2a;
-      color: #fff;
-      padding: .65rem 1.4rem;
-      border-radius: 24px;
-      font-size: .82rem;
-      letter-spacing: .06em;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s, transform .25s;
-      z-index: 999;
-      white-space: nowrap;
-    }
-
-    #toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ── 响应式 ────────────────────────────────────────────── */
-    @media (max-width: 480px) {
-      .hero { min-height: 28vh; padding: 3rem 1.2rem 2.4rem; }
-      .main { padding: 2rem 1rem 5rem; }
-    }
-
-    /* ── 萤火虫画布 ─────────────────────────────────────────── */
-    #fireflies-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* 让主内容在画布上层 */
-    .hero, .main { position: relative; z-index: 1; }
-  </style>
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<STYLE>
+BODY {
+SCROLLBAR-FACE-COLOR: #fcfcfc;
+ SCROLLBAR-HIGHLIGHT-COLOR: #c8dbe1;
+ SCROLLBAR-SHADOW-COLOR: #c8dbe1;
+ SCROLLBAR-3DLIGHT-COLOR: #fcfcfc;
+ SCROLLBAR-ARROW-COLOR: #c8dbe1;
+ SCROLLBAR-TRACK-COLOR: #fcfcfc;
+ SCROLLBAR-DARKSHADOW-COLOR: #fcfcfc;
+ SCROLLBAR-BASE-COLOR: #fcfcfc
+}
+.STYLE9 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	font-weight: bold;
+}
+.STYLE10 {font-size: 16px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+.style11 {color: #57C1DB}
+.t11 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #999999;
+	text-decoration: none;
+	line-height: 15px;
+}
+.style17 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+</STYLE>
 </head>
-<body>
+<script language="JavaScript" type="text/JavaScript">
 
-  <!-- ── 萤火虫画布 ── -->
-  <canvas id="fireflies-canvas"></canvas>
 
-  <!-- ── Hero ── -->
-  <header class="hero">
-    <h1 class="hero-title">好久不见，你有什么想对我说的吗？</h1>
-    <p class="hero-sub">kakaka小星球等你很久啦～</p>
-  </header>
+function Check()
+{
+    var check; 
 
-  <!-- ── 主内容 ── -->
-  <main class="main">
 
-    <!-- 留言列表 -->
-    <p class="section-label">所有留言</p>
-    <div id="messages-list">
-      <p class="empty-tip">暂无留言，来说第一句话吧</p>
-    </div>
-
-    <!-- 提交表单 -->
-    <div class="form-card">
-      <p class="form-title">留下你的话</p>
-      <form id="msg-form" novalidate>
-
-        <div class="form-row">
-          <label for="nickname">昵称</label>
-          <input
-            type="text"
-            id="nickname"
-            name="nickname"
-            maxlength="20"
-            autocomplete="off"
-          >
-        </div>
-
-        <div class="form-row">
-          <label for="content">留言</label>
-          <textarea
-            id="content"
-            name="content"
-            maxlength="500"
-          ></textarea>
-          <div class="char-count" id="char-count">0 / 500</div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submit-btn">发送</button>
-      </form>
-    </div>
-  </main>
-
-  <!-- Toast -->
-  <div id="toast"></div>
-
-  <script>
-    // ── 工具 ────────────────────────────────────────────────
-    function escHtml(s) {
-      return String(s)
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    function showToast(msg, duration = 2400) {
-      const el = document.getElementById('toast');
-      el.textContent = msg;
-      el.classList.add('show');
-      clearTimeout(el._timer);
-      el._timer = setTimeout(() => el.classList.remove('show'), duration);
-    }
-
-    function formatTime(str) {
-      // str: "2024-03-15 14:30:00"
-      const d = new Date(str.replace(' ', 'T'));
-      if (isNaN(d)) return str;
-      const now = new Date();
-      const diff = (now - d) / 1000; // seconds
-      if (diff < 60)   return '刚刚';
-      if (diff < 3600) return `${Math.floor(diff / 60)} 分钟前`;
-      if (diff < 86400 && d.getDate() === now.getDate()) {
-        return `今天 ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+ if(document.userinfo.mail.value.length!=0)
+  {
+    if (document.userinfo.mail.value.charAt(0)=="." ||        
+         document.userinfo.mail.value.charAt(0)=="@"||       
+         document.userinfo.mail.value.indexOf('@', 0) == -1 || 
+         document.userinfo.mail.value.indexOf('.', 0) == -1 || 
+         document.userinfo.mail.value.lastIndexOf("@")==document.userinfo.mail.value.length-1 || 
+         document.userinfo.mail.value.lastIndexOf(".")==document.userinfo.mail.value.length-1)
+     {
+      alert("Email��ַ��ʽ����ȷ��");
+      document.userinfo.mail.focus();
+      return false;
       }
-      const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
-      if (d.getDate() === yesterday.getDate() && d.getMonth() === yesterday.getMonth()) {
-        return `昨天 ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      }
-      return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    }
+   }
+ else
+  {
+   alert("Email����Ϊ�գ�");
+   document.userinfo.mail.focus();
+   return false;
+   }
+}
 
-    function pad(n) { return String(n).padStart(2, '0'); }
 
-    // ── 渲染留言 ────────────────────────────────────────────
-    function renderMessages(list) {
-      const container = document.getElementById('messages-list');
-      if (!list.length) {
-        container.innerHTML = '<p class="empty-tip">暂无留言，来说第一句话吧</p>';
-        return;
-      }
-      container.innerHTML = list.map(m => `
-        <article class="msg-card">
-          <div class="msg-header">
-            <span class="msg-nickname">${escHtml(m.nickname)}</span>
-            <span class="msg-time">${formatTime(m.created_at)}</span>
-            <span class="msg-id">#${m.id}</span>
-          </div>
-          <p class="msg-content">${escHtml(m.content)}</p>
-        </article>
-      `).join('');
-    }
-
-    // ── 拉取留言 ────────────────────────────────────────────
-    async function loadMessages() {
-      try {
-        const res = await fetch('/api/messages');
-        const json = await res.json();
-        if (json.ok) renderMessages(json.data);
-      } catch (e) {
-        console.error('加载留言失败', e);
-      }
-    }
-
-    // ── 字数统计 ────────────────────────────────────────────
-    const contentEl  = document.getElementById('content');
-    const charCount  = document.getElementById('char-count');
-
-    contentEl.addEventListener('input', () => {
-      const len = contentEl.value.length;
-      charCount.textContent = `${len} / 500`;
-      charCount.classList.toggle('warn', len >= 450);
-    });
-
-    // ── 提交表单 ────────────────────────────────────────────
-    document.getElementById('msg-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const nickname = document.getElementById('nickname').value.trim();
-      const content  = contentEl.value.trim();
-      const btn      = document.getElementById('submit-btn');
-
-      if (!nickname) { showToast('请填写昵称 ✦'); return; }
-      if (!content)  { showToast('留言内容不能为空 ✦'); return; }
-
-      btn.disabled = true;
-      btn.textContent = '发送中…';
-
-      try {
-        const res  = await fetch('/api/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nickname, content }),
-        });
-        const json = await res.json();
-
-        if (json.ok) {
-          document.getElementById('nickname').value = '';
-          contentEl.value = '';
-          charCount.textContent = '0 / 500';
-          charCount.classList.remove('warn');
-          showToast('留言已发送 ✦');
-          await loadMessages();
-        } else {
-          showToast(json.error || '发送失败，请重试');
-        }
-      } catch (err) {
-        showToast('网络错误，请检查连接');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = '发送';
-      }
-    });
-
-    // ── 星星爆炸动画 ────────────────────────────────────────
-    function burstStars(x, y) {
-      const symbols = ['✦', '✧', '★', '✸', '⋆', '✺'];
-      const colors  = ['#7effc4','#a8f0c8','#fff9a0','#ffe4a8','#b8f5ff','#ffffff'];
-      for (let i = 0; i < 14; i++) {
-        const el = document.createElement('span');
-        const angle = (i / 14) * Math.PI * 2;
-        const dist  = 40 + Math.random() * 55;
-        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        el.style.cssText = `
-          position:fixed;left:${x}px;top:${y}px;
-          font-size:${9 + Math.random() * 9}px;
-          color:${colors[Math.floor(Math.random() * colors.length)]};
-          pointer-events:none;z-index:9999;user-select:none;
-          --dx:${(Math.cos(angle) * dist).toFixed(1)}px;
-          --dy:${(Math.sin(angle) * dist).toFixed(1)}px;
-          animation:starBurst ${0.5 + Math.random() * 0.3}s ease-out forwards;
-        `;
-        document.body.appendChild(el);
-        el.addEventListener('animationend', () => el.remove());
-      }
-    }
-
-    document.getElementById('submit-btn').addEventListener('click', function (e) {
-      const r = this.getBoundingClientRect();
-      burstStars(r.left + r.width / 2, r.top + r.height / 2);
-    });
-
-    // ── 初始化 ──────────────────────────────────────────────
-    loadMessages();
-
-    // 每 60 秒自动刷新一次留言
-    setInterval(loadMessages, 60000);
-
-    // ── 萤火虫粒子动画（极小星点，西伯利亚风格）──────────────
-    (function () {
-      const canvas = document.getElementById('fireflies-canvas');
-      const ctx    = canvas.getContext('2d');
-
-      // 淡绿 + 淡蓝两色系
-      const COLORS = [
-        { r: 80,  g: 210, b: 150 },
-        { r: 90,  g: 220, b: 160 },
-        { r: 60,  g: 185, b: 255 },
-        { r: 70,  g: 170, b: 255 },
-        { r: 100, g: 225, b: 175 },
-      ];
-
-      const COUNT = 45;
-      let W, H, flies = [];
-
-      function resize() {
-        W = canvas.width  = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }
-
-      function rand(a, b) { return a + Math.random() * (b - a); }
-
-      function createFly() {
-        const c = COLORS[Math.floor(Math.random() * COLORS.length)];
-        return {
-          x:      rand(0, W),
-          y:      rand(H * 0.3, H + 40),
-          r:      rand(0.4, 1.2),          // ← 极小核心
-          speedY: rand(0.2, 0.65),
-          speedX: rand(-0.18, 0.18),
-          phase:  Math.random() * Math.PI * 2,
-          freq:   rand(0.018, 0.04),
-          drift:  rand(0.005, 0.012),
-          color:  c,
-        };
-      }
-
-      function init() {
-        flies = [];
-        for (let i = 0; i < COUNT; i++) {
-          const f = createFly();
-          f.y = rand(0, H);
-          flies.push(f);
-        }
-      }
-
-      let frame = 0;
-      function tick() {
-        frame++;
-        ctx.clearRect(0, 0, W, H);
-
-        for (const f of flies) {
-          f.y -= f.speedY;
-          f.x += f.speedX + Math.sin(frame * f.drift + f.phase) * 0.4;
-
-          // sin 波闪烁
-          const glow  = (Math.sin(frame * f.freq + f.phase) + 1) / 2;
-          const alpha = 0.2 + glow * 0.8;
-
-          if (f.y < -10 || f.x < -30 || f.x > W + 30) {
-            Object.assign(f, createFly());
-            f.y = H + 8;
-          }
-
-          const { r, g, b } = f.color;
-          const halo = f.r * 5;   // ← 光晕直径很小
-
-          // 外层柔光晕
-          const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, halo);
-          grad.addColorStop(0,   `rgba(${r},${g},${b},${(alpha * .55).toFixed(2)})`);
-          grad.addColorStop(0.5, `rgba(${r},${g},${b},${(alpha * .18).toFixed(2)})`);
-          grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
-
-          ctx.beginPath();
-          ctx.arc(f.x, f.y, halo, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.fill();
-
-          // 中心亮核（极小白点）
-          ctx.beginPath();
-          ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,255,255,${(alpha * .9).toFixed(2)})`;
-          ctx.fill();
-        }
-
-        requestAnimationFrame(tick);
-      }
-
-      window.addEventListener('resize', () => { resize(); init(); });
-      resize();
-      init();
-      tick();
-    })();
-  </script>
+//-->
+</script>
+<body onLoad="MM_preloadImages('pay_02.gif')">
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="567"><table width="497" border="0" cellspacing="0" cellpadding="10">
+        <tr>
+          <td width="477"><span class="T3"><a href="index.htm"><img src="logo.gif" width="145" height="41" border="0"></a></span><span class="style1"><span class="style3"><br>
+                  <span class="style11">+ Creative Design+ Indie Brand+Warm+Friendly+</span></span></span></td>
+        </tr>
+    </table></td>
+    <td width="133"><div align="center"><br>
+            <a href="toy.htm" target="_blank"><img src="toy.gif" width="80" height="68" border="0"></a><br>
+    </div></td>
+  </tr>
+</table>
+<table width="700" height="2" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="575" background="bg7.gif"><div align="left"><span class="t11">{<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><strong><a href="aboutUS.htm" class="a1">About Us</a></strong></span>} {<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="topic.htm" class="a1"><strong>Topic</strong></a></span>} {<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><strong><a href="http://site.douban.com/kakaka/" target="_blank">Talk</a><img src="IMG/talk.gif" width="8" height="8"></strong></span>} {<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="Postcard.htm" class="a1"><strong>Postcard</strong></a></span>} {<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><strong><a href="Notebook.htm" class="a1">Notebook</a></strong></span>} {<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="Paster.htm" class="a1"><span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"></span></a><span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="Sticker.htm" class="a1"><strong>Sticker</strong></a></span></span>} {<span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><strong><a href="Album.htm">Album</a></strong></span>} </span></div></td>
+    <td width="125" background="bg7.gif"><div align="center"><a href="foryou.htm"> </a><a href="toy.htm"><img src="zp.gif" width="82" height="14" border="0"></a>��</div></td>
+  </tr>
+</table>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="utt">.</td>
+  </tr>
+</table>
+<table width="700" border="0" align="center" cellpadding="5" cellspacing="0">
+  <tr>
+    <td background="bg7.gif"><a href="http://item.taobao.com/item.htm?spm=686.1000925.1000774.13.sSL3Iy&id=36933958653" target="_blank"><img src="topic/hide.jpg" width="695" height="330" border="0"></a></td>
+  </tr>
+</table>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="utt">.</td>
+  </tr>
+</table>
+<table width="700" height="94" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="175" height="100"><a href="Postcard.htm"><img src="index01.gif" width="170" height="94" border="0"></a></td>
+    <td width="175"><a href="Notebook.htm"><img src="index02.gif" width="170" height="94" border="0"></a></td>
+    <td width="175"><a href="Paster.htm"><img src="index03.gif" width="170" height="94" border="0"></a></td>
+    <td width="175"><a href="Album.htm"><img src="index04.gif" width="170" height="94" border="0"></a></td>
+  </tr>
+</table>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="166"><a href="Postcard.htm"><img src="index_line01.gif" width="170" height="18" border="0"></a></td>
+    <td width="166"><a href="Notebook.htm"><img src="index_line02.gif" width="170" height="18" border="0"></a></td>
+    <td width="166"><a href="Paster.htm"><img src="index_line03.gif" width="170" height="18" border="0"></a></td>
+    <td width="166"><a href="toy.htm"><img src="index_line04.gif" width="170" height="18" border="0"></a></td>
+  </tr>
+</table>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="458"><a href="shoppinghelp.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image13','','pay_02.gif',1)"><img src="pay_01.gif" alt="�鿴��ϸ" name="Image13" width="422" height="95" border="0"></a></td>
+    <td width="242"><div align="left"><span class="STYLE10"><span class="STYLE9"><br>
+        Join Our Email List</span></span></div>
+        <form action="#" method="post" name="userinfo" onsubmit="return false;">
+          <p align="left">
+            <input type="text" name="mail" value="" size="20">
+            <input type="hidden" name="action" value="ok">
+            <input name="submit" type=submit onClick="return Check();" value="join">
+            <br>
+            <img src="emailicon.gif" width="242" height="15"></p>
+      </form></td>
+  </tr>
+</table>
+<div align="center">
+</div>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" background="bg7.gif"> <span class="t11" onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="http://www.kakaka.cn/" class="a1">Home</a> </span><span class="t11">l <span class="t11" onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="aboutUS.htm" class="a1">About Us</a> </span>l <span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="Download.htm" class="a1">Download</a></span> l <span class="t11" onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="store.htm" class="a1"> Store</a> </span> l <span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="shoppinghelp.htm" class="a1">Shopping Help</a></span></span><span class="style17"><span class="t11"> l</span> <span class="t11"><span onmouseover="style.backgroundColor='#9BCA40'" onmouseout="style.backgroundColor='#ffffff'" bgcolor="#ffffff"><a href="free.htm" class="a1">It's free</a></span></span></span> <br>
+        <div align="center" class="t11"> A Little Website Which Sales Simple Creativity In China <br>
+&copy; kakaka.cn 2008-2014. All rights reserved <br>
+        ��ICP��09014016��<br>
+        <!-- tracking removed -->
+        <br>
+      </div></td>
+  </tr>
+</table>
+<script type="text/javascript">
+/* memorial mode: links are clickable but never navigate */
+(function(){
+  function stop(e){ if(e.preventDefault)e.preventDefault(); if(e.stopPropagation)e.stopPropagation(); return false; }
+  if(document.addEventListener){
+    document.addEventListener('click', function(e){
+      var n=e.target; while(n && n.nodeName!=='A') n=n.parentNode;
+      if(n) return stop(e);
+    }, true);
+    document.addEventListener('submit', stop, true);
+  }
+})();
+</script>
 </body>
 </html>
